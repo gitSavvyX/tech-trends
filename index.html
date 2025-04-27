@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Trends</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <img src="images/tech-trends-logo.jpg" alt="Tech Trends Logo" style="display: block; margin: 0 auto; max-width: 100%; height: auto;">
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="post1.html">The AI Revolution</a></li>
+            <li><a href="post2.html">Cloud Power</a></li>
+            <li><a href="post3.html">Quantum Computing</a></li>
+            <li><button id="dark-mode-toggle">Toggle Dark Mode</button></li>
+        </ul>
+    </nav>
+    <main>
+        <section>
+            <h2>Welcome to Tech Trends</h2>
+            <p>This site dives into the latest advancements in technology, from artificial intelligence to quantum computing. Join me as we explore how these innovations shape our world in 2025 and beyond.</p>
+            <img src="images/tech-future.jpg" alt="Futuristic Technology" width="300">
+
+            <h3>Cloud Computing Insight</h3>
+            <div id="cloud-stats">
+                <p id="stats-message">Loading...</p>
+                <p id="stats-source"></p>
+            </div>
+
+            <h3>Personalized Welcome (Edge Computing)</h3>
+            <button id="welcome-btn">Get Welcome Message</button>
+            <p id="welcome-message"></p>
+
+            <h3>Share Your Cloud Computing Thoughts</h3>
+            <form name="cloud-feedback" method="POST" data-netlify="true">
+                <input type="hidden" name="form-name" value="cloud-feedback">
+                <p>
+                    <label for="feedback">Your Feedback:</label><br>
+                    <textarea id="feedback" name="feedback" rows="4" style="width: 100%;"></textarea>
+                </p>
+                <p>
+                    <button type="submit">Submit</button>
+                </p>
+            </form>
+
+            <h2>Recent Posts</h2>
+            <article>
+                <h3><a href="post1.html">The AI Revolution in 2025</a></h3>
+                <p>Artificial intelligence is transforming industries, from healthcare to entertainment.</p>
+                <img src="images/ai-tech.jpg" alt="AI Technology" width="300">
+            </article>
+            <article>
+                <h3><a href="post2.html">Why Cloud Computing Rules</a></h3>
+                <p>Cloud computing powers businesses with scalability and flexibility.</p>
+                <img src="images/cloud-tech.jpg" alt="Cloud Computing" width="300">
+            </article>
+            <article>
+                <h3><a href="post3.html">The Rise of Quantum Computing</a></h3>
+                <p>Quantum computing promises to revolutionize problem-solving.</p>
+                <img src="images/quantum-computer.jpg" alt="Quantum Computing" width="300">
+            </article>
+            <h2>Tech Image Gallery</h2>
+            <div class="gallery">
+                <img src="images/tech-gadget.jpg" alt="Tech Gadget" width="200" onclick="enlargeImage(this)">
+                <img src="images/coding-screen.jpg" alt="Coding Screen" width="200" onclick="enlargeImage(this)">
+                <img src="images/robotics.jpg" alt="Robotics" width="200" onclick="enlargeImage(this)">
+                <img src="images/iot-device.jpg" alt="IoT Device" width="200" onclick="enlargeImage(this)">
+            </div>
+
+            <h2>Cloud Computing Resources</h2>
+            <ul>
+                <li><a href="https://aws.amazon.com/what-is-cloud-computing/">AWS: What is Cloud Computing?</a></li>
+                <li><a href="https://azure.microsoft.com/en-us/overview/what-is-cloud-computing/">Microsoft Azure: Cloud Computing Basics</a></li>
+                <li><a href="https://cloud.google.com/learn/what-is-cloud-computing">Google Cloud: Cloud Computing Explained</a></li>
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <p>© 2025 Tech Trends. Hosted on Netlify.</p>
+        <p>Powered by Netlify's Global CDN for fast, scalable access worldwide.</p>
+    </footer>
+    <button id="back-to-top" style="display: none;">Back to Top</button>
+    <script>
+        const toggleButton = document.getElementById('dark-mode-toggle');
+        toggleButton.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        });
+
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+
+        function enlargeImage(img) {
+            img.classList.toggle('enlarged');
+        }
+
+        fetch('/.netlify/functions/cloud-stats')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('stats-message').textContent = `${data.message}: ${data.stat}`;
+                document.getElementById('stats-source').textContent = `Source: ${data.source}`;
+            })
+            .catch(error => {
+                document.getElementById('stats-message').textContent = "Failed to load cloud stats.";
+                console.error(error);
+            });
+
+        document.getElementById('welcome-btn').addEventListener('click', () => {
+            fetch('/welcome')
+                .then(response => response.text())
+                .then(message => {
+                    document.getElementById('welcome-message').textContent = message;
+                })
+                .catch(error => {
+                    document.getElementById('welcome-message').textContent = "Error fetching welcome message.";
+                    console.error(error);
+                });
+        });
+
+        const backToTopButton = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopButton.style.display = 'block';
+            } else {
+                backToTopButton.style.display = 'none';
+            }
+        });
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
