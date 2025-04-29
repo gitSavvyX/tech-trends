@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Rise of Quantum Computing - Tech Trends</title>
+    <title>Contact Us - Tech Trends</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
         <h1>Tech Trends</h1>
-        <p>The Rise of Quantum Computing</p>
+        <p>Contact Us</p>
     </header>
     <nav>
         <ul>
@@ -22,16 +22,28 @@
         </ul>
     </nav>
     <main>
-        <article>
-            <h2>The Rise of Quantum Computing</h2>
-            <p>Posted on April 10, 2025</p>
-            <img src="images/quantum-tech.jpg" alt="Quantum Technology" width="300">
-            <p>Quantum computing promises to revolutionize problem-solving...</p>
-            <h3>What is Quantum Computing?</h3>
-            <p>Unlike classical computing, quantum computing uses qubits...</p>
-            <h3>Future Potential</h3>
-            <p>From cryptography to drug discovery, quantum computing has vast potential...</p>
-        </article>
+        <section>
+            <h2>Get in Touch</h2>
+            <p>We’d love to hear from you! Share your thoughts or questions about tech trends.</p>
+            <form name="contact" method="POST" data-netlify="true">
+                <input type="hidden" name="form-name" value="contact">
+                <p>
+                    <label for="name">Name:</label><br>
+                    <input type="text" id="name" name="name" required style="width: 100%;">
+                </p>
+                <p>
+                    <label for="email">Email:</label><br>
+                    <input type="email" id="email" name="email" required style="width: 100%;">
+                </p>
+                <p>
+                    <label for="message">Message:</label><br>
+                    <textarea id="message" name="message" rows="4" required style="width: 100%;"></textarea>
+                </p>
+                <p>
+                    <button type="submit">Send Message</button>
+                </p>
+            </form>
+        </section>
     </main>
     <footer>
         <p>© 2025 Tech Trends. Hosted on Netlify.</p>
