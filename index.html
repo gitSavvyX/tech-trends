@@ -26,12 +26,6 @@
 
     <main>
         <section>
-            <!-- Visitor Counter -->
-            <h2>Visitor Stats</h2>
-            <div id="visitor-counter">
-                <p>Number of visitors: <span id="visitor-count">Loading...</span></p>
-            </div>
-
             <!-- Weather Display -->
             <h2>Weather in Your Area</h2>
             <div id="weather-display">
@@ -127,17 +121,6 @@
         function enlargeImage(img) {
             img.classList.toggle('enlarged');
         }
-
-        // Fetch Visitor Counter
-        fetch('/.netlify/functions/visitor-counter', { method: 'POST' })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('visitor-count').textContent = data.count;
-            })
-            .catch(error => {
-                document.getElementById('visitor-count').textContent = "Error loading count";
-                console.error(error);
-            });
 
         // Fetch Weather Data Using Geolocation
         if (navigator.geolocation) {
