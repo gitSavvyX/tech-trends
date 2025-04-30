@@ -1,12 +1,8 @@
 exports.handler = async (event, context) => {
-    const apiKey = process.env.OPENWEATHER_API_KEY; // Set this in Netlify environment variables
-    const defaultCity = "London"; // Fallback city if location isn't available
+    const apiKey = process.env.OPENWEATHER_API_KEY;
+    const city = "Taxila,PK"; // Explicitly set to Taxila, Pakistan
 
     try {
-        // Use the user's city from geolocation if available, otherwise use default
-        const city = context.geo?.city || defaultCity;
-
-        // Fetch weather data from OpenWeatherMap
         const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`);
         const data = await response.json();
 

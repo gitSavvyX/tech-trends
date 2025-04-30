@@ -112,6 +112,28 @@ body.dark-mode #cloud-stats {
     background-color: #2c2c2c;
 }
 
+#visitor-counter {
+    background-color: #f0f8ff;
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+}
+
+body.dark-mode #visitor-counter {
+    background-color: #2c2c2c;
+}
+
+#weather-display {
+    background-color: #f0f8ff;
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+}
+
+body.dark-mode #weather-display {
+    background-color: #2c2c2c;
+}
+
 #welcome-btn {
     background-color: #006666;
     color: #FFFFFF;
@@ -130,17 +152,6 @@ form {
 }
 
 body.dark-mode form {
-    background-color: #2c2c2c;
-}
-
-#weather-display {
-    background-color: #f0f8ff;
-    padding: 1rem;
-    border-radius: 8px;
-    margin: 1rem 0;
-}
-
-body.dark-mode #weather-display {
     background-color: #2c2c2c;
 }
 
