@@ -1,9 +1,19 @@
 exports.handler = async (event, context) => {
     const apiKey = process.env.OPENWEATHER_API_KEY;
-    const city = "Taxila,PK"; // Explicitly set to Taxila, Pakistan
+    const lat = event.queryStringParameters.lat;
+    const lon = event.queryStringParameters.lon;
+    const city = event.queryStringParameters.city || "Taxila,PK";
 
     try {
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`);
+        let response;
+        if (lat && lon) {
+            // Use latitude and longitude if provided
+            response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`);
+        } else {
+            // Fallback to city if lat/lon not provided
+            response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`);
+        }
+
         const data = await response.json();
 
         if (data.cod !== 200) {

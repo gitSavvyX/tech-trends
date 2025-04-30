@@ -9,7 +9,6 @@
 <body>
     <!-- Hero Section -->
     <header class="hero">
-        <img src="images/tech-trends-logo.jpg" alt="Tech Trends Logo" style="max-width: 200px; height: auto;">
         <h1>Welcome to Tech Trends</h1>
         <p>Exploring the Future of Technology in 2025 and Beyond</p>
     </header>
@@ -140,21 +139,62 @@
                 console.error(error);
             });
 
-        // Fetch Weather Data
-        fetch('/.netlify/functions/weather')
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    document.getElementById('weather-info').textContent = "Unable to fetch weather data.";
-                } else {
-                    document.getElementById('weather-info').textContent = 
-                        `Weather in ${data.city}: ${data.temperature}°C, ${data.description}`;
+        // Fetch Weather Data Using Geolocation
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                position => {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    fetch(`/.netlify/functions/weather?lat=${lat}&lon=${lon}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.error) {
+                                document.getElementById('weather-info').textContent = "Unable to fetch weather data.";
+                            } else {
+                                document.getElementById('weather-info').textContent = 
+                                    `Weather in ${data.city}: ${data.temperature}°C, ${data.description}`;
+                            }
+                        })
+                        .catch(error => {
+                            document.getElementById('weather-info').textContent = "Error loading weather.";
+                            console.error(error);
+                        });
+                },
+                error => {
+                    // Fallback to Taxila if geolocation fails
+                    fetch('/.netlify/functions/weather?city=Taxila,PK')
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.error) {
+                                document.getElementById('weather-info').textContent = "Unable to fetch weather data.";
+                            } else {
+                                document.getElementById('weather-info').textContent = 
+                                    `Weather in ${data.city}: ${data.temperature}°C, ${data.description}`;
+                            }
+                        })
+                        .catch(error => {
+                            document.getElementById('weather-info').textContent = "Error loading weather.";
+                            console.error(error);
+                        });
                 }
-            })
-            .catch(error => {
-                document.getElementById('weather-info').textContent = "Error loading weather.";
-                console.error(error);
-            });
+            );
+        } else {
+            // Fallback if browser doesn't support geolocation
+            fetch('/.netlify/functions/weather?city=Taxila,PK')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        document.getElementById('weather-info').textContent = "Unable to fetch weather data.";
+                    } else {
+                        document.getElementById('weather-info').textContent = 
+                            `Weather in ${data.city}: ${data.temperature}°C, ${data.description}`;
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('weather-info').textContent = "Error loading weather.";
+                    console.error(error);
+                });
+        }
 
         // Search Functionality
         document.getElementById('search-btn').addEventListener('click', () => {
